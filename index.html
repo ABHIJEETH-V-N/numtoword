@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>number to words</title>
+</head>
+<body>
+    <style>
+        body{
+            font-family:monospace;         
+        }
+        .program{
+            padding: 10%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .number{
+            padding: 10px;
+            font-size: 10em;
+            width: 100%;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .output{
+            height: 100%;
+        }
+     
+    </style>
+    <div class="program">
+        <h1>Number -> word</h1>
+        <input type="number" class="number" id="number" oninput="convert()" max="999999999" min="-999999999" placeholder="number"/>
+    </br>
+        <h1 class="output" id="output"></h1>
+         <h1 class="output" id="output2"></h1>
+    </div>
+</body>
+
+<script>
+    function clear(object){
+        object.innerHTML="";
+    }
+    function convert(){
+        let number=(document.getElementById("number"));
+        let n=parseInt(number.value,10);
+        let output=document.getElementById("output");
+        let output2=document.getElementById("output2");
+        clear(output)
+        clear(output2)
+        if(n>999999999|| n< -999999999){
+            number.value=""  
+            output.innerHTML="";
+            return;
+        }
+        let a="";
+        if(n==0){
+            output.innerHTML="zero";
+            return;
+        }
+        if(n<0){
+            a+="minus ";
+            n=n*-1;
+        }
+        output.innerHTML=a+numtoword(n);
+        if(n>99999)output2.innerHTML=a+numtoword2(n);
+    }
+    function numtoword(n){
+        let temp=n;
+        let output="";
+        let counter=0;
+        const numbers={
+            0:"zero",1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine",10:"ten",
+            11:"eleven",12:"twelve",13:"thirteen",14:"fourteen",15:"fifteen",16:"sixteen",17:"seventeen",18:"eighteen",19:"ninteen",20:"twenty",
+            30:"thirty",40:"fourty",50:"fifty",60:"sixty",70:"seventy",80:"eighty",90:"ninty",100:"hundred",
+        };
+        const places={1:"thousand",2:"lakhs",3:"crore"};
+        while(temp){
+            if(temp%1000!==0){
+                let buf=0;
+                if(counter>0 ) buf=temp%100;
+                else buf=temp%1000;
+                let s="";
+                if(buf>99 && counter==0){
+                    s+=numbers[parseInt(buf/100,10)]+" hundred ";
+                    if(buf%100!=0)s+="and "
+                    buf=buf%100;                    
+                }
+                if(buf>9 && !(buf in numbers)){
+                    s+=numbers[parseInt(buf/10,10)*10]+" ";
+                    buf=buf%10;   
+                }
+                if(buf>0){
+                    s+=numbers[(buf)];
+                }
+                console.log(counter);
+                if(counter>0 && s){  
+                    s+=" "+places[counter]+" ";
+                }
+                output=s+output;  
+                console.log(output);
+                console.log("---------------------");
+            }
+            if(counter>0) temp=Math.floor(temp/100);
+            else temp=Math.floor(temp/1000); 
+            counter+=1;
+        }
+        return output;
+    }
+    function numtoword2(n){
+        let temp=n;
+        let output="";
+        let counter=0;
+        const numbers={
+            0:"zero",1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine",10:"ten",
+            11:"eleven",12:"twelve",13:"thirteen",14:"fourteen",15:"fifteen",16:"sixteen",17:"seventeen",18:"eighteen",19:"ninteen",20:"twenty",
+            30:"thirty",40:"fourty",50:"fifty",60:"sixty",70:"seventy",80:"eighty",90:"ninty",100:"hundred",
+        };
+        const places={1:"thousand",2:"million"};
+        while(temp){
+            if(temp%1000!==0){
+                let buf=0;
+                buf=temp%1000;
+                let s="";
+                if(buf>99 ){
+                    s+=numbers[parseInt(buf/100,10)]+" hundred ";
+                    if(buf%100!=0)s+="and "
+                    buf=buf%100;                    
+                }
+                if(buf>9 && !(buf in numbers)){
+                    s+=numbers[parseInt(buf/10,10)*10]+" ";
+                    buf=buf%10;   
+                }
+                if(buf>0){
+                    s+=numbers[(buf)];
+                }
+                console.log(counter);
+                if(counter>0 && s){  
+                    s+=" "+places[counter]+" ";
+                }
+                output=s+output;  
+                console.log(output);
+                console.log("---------------------");
+            }
+            
+            temp=Math.floor(temp/1000); 
+            counter+=1;
+        }
+        return output;
+    }
+</script>
+</html>
