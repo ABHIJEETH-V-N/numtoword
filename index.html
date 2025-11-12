@@ -11,11 +11,13 @@
         body{
             font-family:monospace;  
             overflow-X: hidden;   
+            height: 100%;
         }
 
         .program{
             padding: 2%;
             text-align: center;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             z-index: 10;
@@ -58,17 +60,46 @@
             text-align: center;
             font-weight:bolder;
             padding: 5%;
+            color:black;
+        }
+        #switcher{
+            background-color: black;
+            border-radius: 100%;
+            padding: 30px;
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
         }
     </style>
     <div class="program">
         <h1>Number -> word</h1>
         <input type="number" class="number" id="number" oninput="convert()" max="999999999999999" min="999999999999999" placeholder="number"/>
     </br>
-        <div class="a1"><div class="a2">Indian</br>(₹)</div> <h1 class="output" id="output"></h1></div>
+        <div class="a1"><div id="a2" class="a2">Indian</br>(₹)</div> <h1 class="output" id="output"></h1></div>
 </br>
         <div class="b1"><div class="b2">International</br>($)</div> <h1 class="output2" id="output2"></h1></div>
     </div>
+    <button title="theme" id="switcher" onclick="switcher()" > </button>
 <script>
+    let mode=1;
+    function switcher(){
+        if(mode===1){
+            document.body.style.backgroundColor="black";
+            document.body.style.color="white";
+            document.getElementById("number").style.color="white";
+            document.getElementById("switcher").style.backgroundColor="white";
+            mode=2;
+            return;
+        }
+        if(mode===2){
+            document.body.style.backgroundColor="white";
+            document.body.style.color="black";
+            document.getElementById("number").style.color="black";
+            document.getElementById("switcher").style.backgroundColor="black";
+            mode=1;
+            return;
+        }
+    }
     const numbers={
             0:"Zero",1:"One",2:"Two",3:"Three",4:"Four",5:"Five",6:"Six",7:"Seven",8:"Eight",9:"Nine",10:"Ten",
             11:"Eleven",12:"Twelve",13:"Thirteen",14:"Fourteen",15:"Fifteen",16:"Sixteen",17:"Seventeen",18:"Eighteen",19:"Ninteen",20:"Twenty",
